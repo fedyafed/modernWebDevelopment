@@ -2,8 +2,7 @@
 (function () {
   angular.module("auction").directive('showError', function(){
     return {
-      restrict: "A",
-      transclude: true,
+      restrict: "E",
       templateUrl: "views/directive/ShowError.html",
       link: function(scope, el, attrs, formCtrl){
         scope.errors = [];

@@ -7,7 +7,7 @@
       console.log(data);
       _this.products = data;
     });
-    $scope.$emit('error', ['error1']);
-    $scope.$emit('error', ['error2']);
+    //$scope.$emit('error', ['error1']);
+    //$scope.$emit('error', ['error2']);
   }]);
 }());
