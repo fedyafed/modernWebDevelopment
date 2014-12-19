@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 (function () {
-  angular.module("auction").directive("auctionFooter", function(){
+  angular.module('auction').directive('auctionFooter', function(){
     return {
-      restrict: "E",
-      templateUrl: "/views/directive/Footer.html"
-    }
-  })
+      restrict: 'E',
+      templateUrl: '/views/directive/Footer.html'
+    };
+  });
 }());

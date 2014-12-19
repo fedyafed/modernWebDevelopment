@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 (function () {
-  angular.module("auction").service("ProductService", ['$http', "$q", function($http, $q){
+  angular.module('auction').service('ProductService', ['$http', '$q', function($http, $q){
     this.listProducts = function(){
-      return $http.get("data/products-featured.json")
+      return $http.get('data/products-featured.json')
         .then(function(response) {
           return response.data;
         }, function(){
@@ -11,7 +11,7 @@
     };
 
     this.searchProducts = function(){
-      return $http.get("data/products-search.json")
+      return $http.get('data/products-search.json')
         .then(function(response) {
           return response.data;
         }, function(){
@@ -20,15 +20,15 @@
     };
 
     this.findProduct = function(productId, page){
-      var from = page || "home";
+      var from = page || 'home';
       var productPromise = $q.defer();
       var source;
       var product = null;
       switch (from) {
-        case "home":
+        case 'home':
               source =this.listProducts();
               break;
-        case "search":
+        case 'search':
               source = this.searchProducts();
       }
       source.then(function(products){
@@ -42,5 +42,5 @@
 
       return productPromise;
     };
-  }])
+  }]);
 }());

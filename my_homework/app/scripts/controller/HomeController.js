@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 (function () {
-  angular.module("auction").controller("HomeController", ['ProductService', '$scope', function(ProductService, $scope) {
+  angular.module('auction').controller('HomeController', ['ProductService', '$scope', function(ProductService, $scope) {
 
     var _this = this;
     ProductService.listProducts().then(function(data){

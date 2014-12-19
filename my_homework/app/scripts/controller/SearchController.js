@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 (function () {
   var SearchController = function() {
 
   };
 
-  angular.module("auction").controller("SearchController", SearchController);
+  angular.module('auction').controller('SearchController', SearchController);
 }());

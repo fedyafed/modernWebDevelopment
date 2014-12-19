@@ -7,3 +7,9 @@ body {
 .alert  {
   margin-bottom: 0;
 }
+
+pair-slider .slider.slider-horizontal {
+  width: 98%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
