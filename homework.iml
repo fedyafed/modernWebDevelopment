@@ -10,6 +10,10 @@
       <excludeFolder url="file://$MODULE_DIR$/homework3/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/dist" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/my_homework/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/my_homework/bower_components" />
+      <excludeFolder url="file://$MODULE_DIR$/my_homework/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/my_homework/node_modules" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
