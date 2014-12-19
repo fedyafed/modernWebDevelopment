@@ -1,0 +1,9 @@
+/* Space out content a bit */
+body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.alert  {
+  margin-bottom: 0;
+}
