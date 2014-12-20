@@ -3,15 +3,18 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/homework1" />
+      <excludeFolder url="file://$MODULE_DIR$/homework2" />
       <excludeFolder url="file://$MODULE_DIR$/homework2/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/homework2/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/homework2/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/homework3" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/dist" />
       <excludeFolder url="file://$MODULE_DIR$/homework3/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/homework4" />
       <excludeFolder url="file://$MODULE_DIR$/my_homework/.tmp" />
-      <excludeFolder url="file://$MODULE_DIR$/my_homework/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/my_homework/dist" />
       <excludeFolder url="file://$MODULE_DIR$/my_homework/node_modules" />
     </content>

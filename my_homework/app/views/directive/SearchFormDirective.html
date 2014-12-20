@@ -1,0 +1,41 @@
+<form class="form-horizontal" role="search">
+  <div class="row">
+    <div class="col-sm-6">
+      <label class="control-label">
+        Product
+      </label>
+      <input class="form-control" placeholder="Product Name">
+    </div>
+
+    <div class="col-sm-6">
+      <label class="control-label">&nbsp;</label>
+      <select class="form-control">
+        <option value="">Select product category</option>
+        <option value="1">Category 1</option>
+        <option value="2">Category 2</option>
+        <option value="3">Category 3</option>
+      </select>
+    </div>
+
+
+    <div class="col-sm-6">
+      <label class="control-label">Current Price</label>
+      <pair-slider low="low" high="high" max="500"></pair-slider>
+    </div>
+
+    <div class="col-sm-6">
+      <label class="control-label">Max Auction Close Day</label>
+      <date-calendar></date-calendar>
+    </div>
+
+    <div class="col-sm-6">
+      <label class="control-label">Number of Bids</label>
+      <div class="col-xs-4 pull-right">
+        <input class="form-control" type="number">
+      </div>
+    </div>
+  </div>
+
+
+  <button class="btn btn-default btn-primary form-control">Find More</button>
+</form>
