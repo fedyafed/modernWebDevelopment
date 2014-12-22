@@ -1,13 +1,10 @@
+'use strict';
 (function () {
-  'use strict';
-
-  var navbarDirectiveFactory = function () {
+  angular.module('auction').directive('auctionNavbar', function(){
     return {
       scope: false,
       restrict: 'E',
-      templateUrl: 'views/partial/NavbarDirective.html'
+      templateUrl: '/views/directive/Navbar.html'
     };
-  };
-
-  angular.module('auction').directive('auctionNavbar', navbarDirectiveFactory);
+  });
 }());

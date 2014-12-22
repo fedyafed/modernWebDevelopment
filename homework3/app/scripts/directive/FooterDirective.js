@@ -1,13 +1,10 @@
+'use strict';
 (function () {
-  'use strict';
-
-  var footerDirectiveFactory = function () {
+  angular.module('auction').directive('auctionFooter', function(){
     return {
       scope: false,
       restrict: 'E',
-      templateUrl: 'views/partial/FooterDirective.html'
+      templateUrl: '/views/directive/Footer.html'
     };
-  };
-
-  angular.module('auction').directive('auctionFooter', footerDirectiveFactory);
+  });
 }());

@@ -1,12 +1,11 @@
+'use strict';
 (function () {
-  'use strict';
-
-  var HomeController = function (productService) {
+  var HomeController = function(ProductService){
     var _this = this;
     _this.products = [];
-
-    productService.getProducts()
-        .then(function (data) { _this.products = data; });
+    ProductService.listProducts().then(function(data){
+      _this.products = data;
+    });
   };
 
   HomeController.$inject = ['ProductService'];

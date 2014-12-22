@@ -1,117 +1,82 @@
-<div class="row">
-    <div class="col-xs-12">
-        <a ng-href="#/">Home</a>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <a ng-href="#/category">Category title</a>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        Item
-    </div>
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-default form-control">Find More</button>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-xs-5">
-        <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
-    </div>
-    <div class="col-xs-7">
-        <h3 ng-bind="ctrl.product.title" style="margin-top: 0"></h3>
-        <div class="row">
-            <div class="col-xs-12">
-                Seller: starmotors (135)
-            </div>
-            <div class="col-xs-12">
-                100% Positive feedback
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-1 col-xs-offset-1 vcenter h4">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-    </div><!--
-     --><div class="col-xs-8 vcenter">
-    <div class="row">
-        <div class="col-xs-4">
-            <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
-        </div>
-        <div class="col-xs-4">
-            <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
-        </div>
-        <div class="col-xs-4">
-            <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
-        </div>
-    </div>
-</div><!--
-     --><div class="col-xs-2 vcenter h4">
+<div class="well row">
+  <div class="col-sm-6 col-md-8 form-group">
+    <a href="#/">Home</a>
     <span class="glyphicon glyphicon-chevron-right"></span>
-</div>
+    <a href="#/category">Category Title</a>
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span ng-bind="ctrl.product.title">Item</span>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <button class="btn btn-default form-control" ng-hide="ctrl.searchPanelShow" ng-click="ctrl.searchPanelShow = true">Find More</button>
+    <div class="text-right">
+      <button class="close" ng-show="ctrl.searchPanelShow" ng-click="ctrl.searchPanelShow = false">&times;</button>
+    </div>
+  </div>
+  <div class="col-xs-12 hidden" ng-show="ctrl.searchPanelShow">
+    <search-form></search-form>
+  </div>
 </div>
 <div class="row">
-    <div class="col-xs-4 text-center">
-        <span class="badge">{{ ctrl.product.timeleft }} hour left</span><br/>
-        <small>Today 15.00</small>
+  <div class="col-sm-6">
+    <div >
+      <img class="img-responsive center-block" ng-src="/images/{{ctrl.product.thumb}}">
     </div>
-    <div class="col-xs-4 text-center">
-              <span class="badge">
-                <span class="glyphicon glyphicon-eye-open"></span> {{ ctrl.product.watchers }}
-              </span>
-        <br/>
-        <small>Watchers</small>
+    <div class="row">
+      <div class="col-xs-4">
+        <img class="img-responsive" ng-src="/images/{{ctrl.product.thumb}}">
+      </div>
+      <div class="col-xs-4">
+        <img class="img-responsive" ng-src="/images/{{ctrl.product.thumb}}">
+      </div>
+      <div class="col-xs-4">
+        <img class="img-responsive" ng-src="/images/{{ctrl.product.thumb}}">
+      </div>
     </div>
-    <div class="col-xs-4 text-center">
-              <span class="badge">
-                {{ ctrl.product.price | currency }}
-              </span>
-        <br/>
-        <small>Current price</small>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-xs-3 col-xs-offset-1">
-            <span class="badge">
-                <span class="glyphicon glyphicon-eye-open"></span>
-                <span >{{ ctrl.product.watchers }}</span>
-            </span>
-    </div>
-    <small class="col-xs-3">
-        Watchers
-    </small>
-    <div class="col-xs-5">
-        <a>Watch</a>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-xs-3 col-xs-offset-1">
-            <span class="badge">
-                <span class="">{{ ctrl.product.price | currency }}</span>
-            </span>
-    </div>
-    <small class="col-xs-8">
-        Current Price
-    </small>
-</div>
-<br/>
-<div class="row">
-    <div class="col-xs-3 col-xs-offset-1">
-            <span class="badge">
-                <span>{{ 5 }} bids</span>
-            </span>
-    </div>
-    <strong class="col-xs-8 ">
-        Time Left
-            <span class="badge">
-                <span ng-bind="ctrl.product.timeleft"></span>
-                h
-            </span>
-    </strong>
-</div>
-<br/>
-<input class="form-control" placeholder="Enter bid">
-<button class="btn btn-default form-control">Place bid</button>
 
-<h4>Item's description</h4>
-<p ng-bind="ctrl.product.description"></p>
+    <br/>
+    <div class="row text-center">
+      <span class="badge"><span class="glyphicon glyphicon-eye-open"></span></span>
+      <span ng-bind="ctrl.product.watchers"></span>
+      Watchers
+      <a class="btn">Watch</a>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <h1 ng-bind="ctrl.product.title"></h1>
+        <div>
+          Seller: <b>starmotors</b> (135) 100% Positive feedback
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <div>
+            <h4> <b>Current price:</b> <span ng-bind="ctrl.product.price | currency"></span>
+              [5 bids]
+            </h4>
+          </div>
+          <div>
+            <b>Time Left:</b> <span ng-bind="ctrl.product.timeleft"1></span> h
+          </div>
+          <div>
+            Today 15.00
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <input class="form-control">
+        </div>
+        <div class="form-group">
+          <button class="form-control btn btn-default btn-primary">Place Bid</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <h4>Item's description:</h4>
+      <p ng-bind="ctrl.product.description"></p>
+    </div>
+  </div>
+</div>

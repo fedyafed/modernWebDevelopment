@@ -1,13 +1,15 @@
-/* Custom styles go here */
+/* Space out content a bit */
 body {
-  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
+.alert  {
+  margin-bottom: 0;
 }
-.full-width {
-  width: 100%;
+
+pair-slider .slider.slider-horizontal {
+  width: 98%;
+  margin-left: 1%;
+  margin-right: 1%;
 }

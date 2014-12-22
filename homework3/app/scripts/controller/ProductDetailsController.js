@@ -1,14 +1,10 @@
-/**
- * Created by fedya on 11.12.14.
- */
-(function(){
-    "use strict";
+'use strict';
+(function () {
+  var ProductDetailsController = function(product) {
+    this.product = product;
+    this.searchPanelShow = false;
+  };
 
-    var productDetailsController = function(product) {
-        this.product = product;
-        console.log(product);
-    };
-
-    productDetailsController.$inject = ["product"];
-    angular.module("auction").controller("ProductDetailsController", productDetailsController);
+  ProductDetailsController.$inject = ['product'];
+  angular.module('auction').controller('ProductDetailsController', ProductDetailsController);
 }());
