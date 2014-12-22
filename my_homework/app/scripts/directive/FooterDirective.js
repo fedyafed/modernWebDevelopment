@@ -4,7 +4,7 @@
     return {
       scope: false,
       restrict: 'E',
-      templateUrl: '/views/directive/Footer.html'
+      templateUrl: 'views/directive/Footer.html'
     };
   });
 }());

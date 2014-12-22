@@ -4,7 +4,7 @@
     return {
       scope: false,
       restrict: 'E',
-      templateUrl: '/views/directive/Navbar.html'
+      templateUrl: 'views/directive/Navbar.html'
     };
   });
 }());
