@@ -29,7 +29,7 @@ angular
         controllerAs: 'ctrl',
         resolve: {
           product: ['ProductService', '$route', function(ProductService, $route){
-            return ProductService.findProduct($route.current.params.productId);
+            return ProductService.getProductById($route.current.params.productId);
         }]}
       })
       .otherwise({

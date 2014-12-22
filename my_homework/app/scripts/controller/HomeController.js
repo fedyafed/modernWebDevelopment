@@ -8,9 +8,6 @@
     });
   };
 
-  HomeController.prototype = {};
-
   HomeController.$inject = ['ProductService'];
-
   angular.module('auction').controller('HomeController', HomeController);
 }());

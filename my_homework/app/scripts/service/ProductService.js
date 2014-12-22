@@ -21,7 +21,7 @@
         });
     };
 
-    this.findProduct = function(productId, page){
+    this.getProductById = function(productId, page){
       var from = page || 'home';
       var productPromise = $q.defer();
       var source;
