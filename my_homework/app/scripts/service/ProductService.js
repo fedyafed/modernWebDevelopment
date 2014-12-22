@@ -1,11 +1,12 @@
 'use strict';
 (function () {
-  angular.module('auction').service('ProductService', ['$http', '$q', function($http, $q){
+  angular.module('auction').service('ProductService', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
     this.listProducts = function(){
       return $http.get('data/products-featured.json')
         .then(function(response) {
           return response.data;
         }, function(){
+          $rootScope.$emit('error', ['Products not found.']);
           return null;
         });
     };
@@ -15,6 +16,7 @@
         .then(function(response) {
           return response.data;
         }, function(){
+          $rootScope.$emit('error', ['Searched products not found.']);
           return null;
         });
     };
@@ -36,11 +38,12 @@
         if (product) {
           productPromise.resolve(product);
         } else {
+          $rootScope.$emit('error', ['Requested product not found.']);
           productPromise.reject();
         }
       });
 
-      return productPromise;
+      return productPromise.promise;
     };
   }]);
 }());

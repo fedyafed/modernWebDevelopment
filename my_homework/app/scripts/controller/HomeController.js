@@ -1,13 +1,16 @@
 'use strict';
 (function () {
-  angular.module('auction').controller('HomeController', ['ProductService',  function(ProductService) {
-
+  var HomeController = function(ProductService){
     var _this = this;
+    _this.products = [];
     ProductService.listProducts().then(function(data){
-      console.log(data);
       _this.products = data;
     });
-    //$scope.$emit('error', ['error1']);
-    //$scope.$emit('error', ['error2']);
-  }]);
+  };
+
+  HomeController.prototype = {};
+
+  HomeController.$inject = ['ProductService'];
+
+  angular.module('auction').controller('HomeController', HomeController);
 }());

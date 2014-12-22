@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="auction">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title ng-bind="title">Auction</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="auction">
+  <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -26,9 +26,7 @@
     <!-- Add your site or application content here -->
 
     <auction-navbar></auction-navbar>
-
     <div class="container">
-      <search-form></search-form>
       <show-error></show-error>
       <div ng-view></div>
     </div>
@@ -61,7 +59,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controller/HomeController.js"></script>
         <script src="scripts/controller/SearchController.js"></script>
-        <script src="scripts/controller/ProductController.js"></script>
+        <script src="scripts/controller/ProductDetailsController.js"></script>
         <script src="scripts/service/ProductService.js"></script>
         <script src="scripts/directive/NavbarDirective.js"></script>
         <script src="scripts/directive/FooterDirective.js"></script>

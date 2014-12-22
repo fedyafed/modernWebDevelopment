@@ -4,7 +4,6 @@
     return {
       restrict: 'E',
       templateUrl: 'views/directive/SearchFormDirective.html'
-
-    }
-  })
+    };
+  });
 }());

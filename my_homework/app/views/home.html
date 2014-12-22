@@ -28,5 +28,22 @@
     </div>
   </div>
 
-  {{ctrl.products}}
+  <h1 class="well well-sm row">Featured Products</h1>
+
+  <div class="row">
+    <ul class="list-unstyled">
+      <li class="col-sm-6 col-md-4" ng-repeat="product in ctrl.products">
+        <div class="row">
+        <div class="col-xs-4">
+          <a ng-href="#/product/{{product.id}}"> <img class="img-responsive" ng-src="images/{{product.thumb}}"></a>
+        </div>
+        <div class="col-xs-8">
+          <a ng-href="#/product/{{product.id}}"><h2 ng-bind="product.title"></h2></a>
+          <p ng-bind="product.description"></p>
+        </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
 </div>
