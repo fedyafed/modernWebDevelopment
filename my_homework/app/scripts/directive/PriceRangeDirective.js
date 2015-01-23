@@ -1,21 +1,24 @@
 'use strict';
 (function () {
-  angular.module('auction').directive('pairSlider', function(){
+  angular.module('auction').directive('priceRange', function(){
     return {
       restrict: 'E',
       scope: {
         min: '@',
         max: '@',
+        step: '@',
         low: '=',
-        high: '=',
-        step: '='
+        high: '='
       },
-      templateUrl: 'views/directive/PairSliderDirective.html',
+      templateUrl: 'views/directive/PriceRangeDirective.html',
       link: function(scope, element){
         var sliderElement = angular.element(element).find('input[type="text"]');
         var min = parseInt(scope.min) || 0;
         var max = parseInt(scope.max) || 100;
         var step = parseInt(scope.step) || (max - min) / 100;
+        scope.Min = min;
+        scope.Max = max;
+        scope.Step = step;
 
         scope.low = parseInt(scope.low) || min;
         scope.high = parseInt(scope.high) || max;
@@ -38,14 +41,31 @@
           }
         });
 
-        scope.$watch(function(scope) {
-          return [
-            parseInt(scope.low),
-            parseInt(scope.high)
-          ];
-        }, function(newValue){
-          slider.slider('setValue', newValue);
-        }, true);
+        scope.$watch('low', function(val){
+          var value = parseInt(val);
+          if (isNaN(value) || value < scope.Min) {
+            value = scope.Min;
+          }
+          if (value > scope.high) {
+            value = scope.high;
+          }
+            scope.low = value;
+            slider.slider('setValue', [scope.low, scope.high]);
+        });
+
+        scope.$watch('high', function(val){
+          var value = parseInt(val);
+          if (value < scope.low) {
+            value = scope.low;
+          }
+          if (isNaN(value) || value > scope.Max) {
+            value = scope.Max;
+          }
+          if (scope.high !== value) {
+            scope.high = value;
+          }
+            slider.slider('setValue', [scope.low, scope.high]);
+        });
       }
     };
   });

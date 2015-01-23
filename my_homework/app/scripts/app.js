@@ -2,8 +2,8 @@
 (function(){
 angular
   .module('auction', [
-    'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'restangular'
   ]).config(['$routeProvider', function($routeProvider){
     var getTitle = function(page){
       return page + ' | Auction';
@@ -29,12 +29,16 @@ angular
         controllerAs: 'ctrl',
         resolve: {
           product: ['ProductService', '$route', function(ProductService, $route){
-            return ProductService.getProductById($route.current.params.productId);
+            return ProductService.getProductById(parseInt($route.current.params.productId));
         }]}
       })
       .otherwise({
         redirectTo: '/'
       });
+  }]).config(['RestangularProvider', function(RestAngularProvider){
+    //RestAngularProvider.setBaseUrl('/data');
+    RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
+    //RestAngularProvider.setRequestSuffix('.json');
   }]).run(['$rootScope', function($rootScope){
     $rootScope.$on('$routeChangeSuccess', function(event, newRoute){
       $rootScope.title = newRoute.$$route.title;

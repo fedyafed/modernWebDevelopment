@@ -1,49 +1,28 @@
 'use strict';
 (function () {
-  angular.module('auction').service('ProductService', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
-    this.listProducts = function(){
-      return $http.get('data/products-featured.json')
-        .then(function(response) {
-          return response.data;
-        }, function(){
-          $rootScope.$emit('error', ['Products not found.']);
-          return null;
-        });
-    };
+  var ProductService = function(Restangular){
+    this.Restangular = Restangular;
+    this.search = {};
+  };
 
-    this.searchProducts = function(){
-      return $http.get('data/products-search.json')
-        .then(function(response) {
-          return response.data;
-        }, function(){
-          $rootScope.$emit('error', ['Searched products not found.']);
-          return null;
-        });
-    };
+  ProductService.prototype = {
+    listProducts: function() {
+      return this.Restangular.all('products').getList();
+    },
 
-    this.getProductById = function(productId, page){
-      var from = page || 'home';
-      var productPromise = $q.defer();
-      var source;
-      var product = null;
-      switch (from) {
-        case 'home':
-              source =this.listProducts();
-              break;
-        case 'search':
-              source = this.searchProducts();
-      }
-      source.then(function(products){
-         product = _.find(products, {id: parseInt(productId)});
-        if (product) {
-          productPromise.resolve(product);
-        } else {
-          $rootScope.$emit('error', ['Requested product not found.']);
-          productPromise.reject();
-        }
-      });
+    searchProducts: function(params){
+      return this.Restangular.all('products').getList(params);
+    },
 
-      return productPromise.promise;
-    };
-  }]);
+    getProductById: function(productId){
+      return this.Restangular.one('products', productId).get();
+    },
+
+    getSearch: function(){
+      return this.search;
+    }
+  };
+
+  ProductService.$inject = ['Restangular'];
+  angular.module('auction').service('ProductService', ProductService);
 }());

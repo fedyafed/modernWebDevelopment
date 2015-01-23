@@ -7,12 +7,12 @@
     <span ng-bind="ctrl.product.title">Item</span>
   </div>
   <div class="col-sm-6 col-md-4">
-    <button class="btn btn-default form-control" ng-hide="ctrl.searchPanelShow" ng-click="ctrl.searchPanelShow = true">Find More</button>
+    <button class="btn btn-default form-control" ng-hide="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = true">Find More</button>
     <div class="text-right">
-      <button class="close" ng-show="ctrl.searchPanelShow" ng-click="ctrl.searchPanelShow = false">&times;</button>
+      <button class="close" ng-show="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = false">&times;</button>
     </div>
   </div>
-  <div class="col-xs-12 hidden" ng-show="ctrl.searchPanelShow">
+  <div class="col-xs-12" ng-show="ctrl.isSearchFormVisible">
     <search-form></search-form>
   </div>
 </div>

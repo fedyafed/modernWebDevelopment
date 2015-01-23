@@ -2,7 +2,7 @@
 (function () {
   var ProductDetailsController = function(product) {
     this.product = product;
-    this.searchPanelShow = false;
+    this.isSearchFormVisible = false;
   };
 
   ProductDetailsController.$inject = ['product'];
