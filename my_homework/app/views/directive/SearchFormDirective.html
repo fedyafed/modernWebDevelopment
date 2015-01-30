@@ -1,23 +1,24 @@
-<form class="form-horizontal" role="search">
+<form name="searchForm" class="form-horizontal" role="search">
+  {{ctrl.newSearch}}
   <div class="row">
     <div class="col-md-4">
-      <div class="form-group">
-        <div class="col-sm-6 col-md-12">
+      <div class="row">
+      <div class="col-sm-6 col-md-12" ng-class="{'has-error': searchForm.productName.$invalid}">
           <label class="control-label">
             Product
           </label>
-          <input class="form-control" placeholder="Product Name" ng-minlength="3">
-        </div>
+          <input class="form-control" name="productName" placeholder="Product Name (at least 3 characters)" ng-minlength="3" ng-model="ctrl.newSearch.name" ng-required="true">
+      </div>
 
-        <div class="col-sm-6 col-md-12">
-          <label class="control-label">&nbsp;</label>
-          <select class="form-control">
+      <div class="col-sm-6 col-md-12">
+          <label class="control-label visible-sm">&nbsp;</label>
+          <select class="form-control" ng-model="ctrl.newSearch.category">
             <option value="">Select product category</option>
             <option value="1">Category 1</option>
             <option value="2">Category 2</option>
             <option value="3">Category 3</option>
           </select>
-        </div>
+      </div>
       </div>
     </div>
 
@@ -25,7 +26,7 @@
       <div class="form-group">
         <div class="col-xs-12">
           <label class="control-label">Current Price</label>
-          <price-range low="ctrl.low" high="ctrl.high" max="500"></price-range>
+          <price-range low="ctrl.newSearch.lowPrice" high="ctrl.newSearch.highPrice" min="{{ctrl.priceRange[0]}}" max="{{ctrl.priceRange[1]}}"></price-range>
         </div>
       </div>
     </div>
@@ -35,7 +36,7 @@
       <div class="form-group">
         <div class="col-xs-12">
           <label class="control-label">Max Auction Close Day</label>
-          <date-picker date="ctrl.date" from-date="-0d"></date-picker>
+          <date-picker date="ctrl.newSearch.closeDate" from-date="-0d"></date-picker>
         </div>
       </div>
     </div>
@@ -47,14 +48,14 @@
           <label class="control-label">Number of Bids</label>
         </div>
         <div class="col-xs-4 pull-right">
-          <input class="form-control" type="number" min="1">
+          <input class="form-control" type="number" min="1" ng-model="ctrl.newSearch.bidNum">
         </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-    <button class="btn btn-default btn-primary form-control">Find More</button>
+    <button class="btn btn-default btn-primary form-control" ng-click="ctrl.search()" ng-disabled="searchForm.$invalid">Find More</button>
     </div>
   </div>
 

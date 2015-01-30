@@ -36,9 +36,9 @@ angular
         redirectTo: '/'
       });
   }]).config(['RestangularProvider', function(RestAngularProvider){
-    //RestAngularProvider.setBaseUrl('/data');
-    RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
-    //RestAngularProvider.setRequestSuffix('.json');
+    RestAngularProvider.setBaseUrl('/data');
+    //RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
+    RestAngularProvider.setRequestSuffix('.json');
   }]).run(['$rootScope', function($rootScope){
     $rootScope.$on('$routeChangeSuccess', function(event, newRoute){
       $rootScope.title = newRoute.$$route.title;
