@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="auction">
+<html class="no-js" ng-app="auction" ng-strict-di>
   <head>
     <meta charset="utf-8">
     <title ng-bind="title">Auction</title>
@@ -61,13 +61,17 @@
         <script src="scripts/controller/SearchController.js"></script>
         <script src="scripts/controller/ProductDetailsController.js"></script>
         <script src="scripts/service/ProductService.js"></script>
+        <script src="scripts/service/SearchService.js"></script>
         <script src="scripts/directive/NavbarDirective.js"></script>
         <script src="scripts/directive/FooterDirective.js"></script>
         <script src="scripts/directive/ShowErrorDirective.js"></script>
         <script src="scripts/directive/PriceRangeDirective.js"></script>
         <script src="scripts/directive/SearchFormDirective.js"></script>
         <script src="scripts/directive/DatePickerDirective.js"></script>
-
         <!-- endbuild -->
+
+        <!-- html2js -->
+        <script src="scripts/html_template.js"></script>
+        <!-- endhtml2js -->
 </body>
 </html>

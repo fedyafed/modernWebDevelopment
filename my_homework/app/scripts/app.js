@@ -3,7 +3,8 @@
 angular
   .module('auction', [
     'ngRoute',
-    'restangular'
+    'restangular',
+    'auction.templates'
   ]).config(['$routeProvider', function($routeProvider){
     var getTitle = function(page){
       return page + ' | Auction';
@@ -19,6 +20,7 @@ angular
       .when('/search', {
         templateUrl: 'views/search.html',
         title: getTitle('Search'),
+        reloadOnSearch: false,
         controller: 'SearchController',
         controllerAs: 'ctrl'
       })
@@ -29,14 +31,19 @@ angular
         controllerAs: 'ctrl',
         resolve: {
           product: ['ProductService', '$route', function(ProductService, $route){
-            return ProductService.getProductById(parseInt($route.current.params.productId));
+            return ProductService.getProductById(parseInt($route.current.params.productId))
+              .then(function (product) {
+                return product;
+              }, function () {
+                return null;
+              });
         }]}
       })
       .otherwise({
         redirectTo: '/'
       });
   }]).config(['RestangularProvider', function(RestAngularProvider){
-    RestAngularProvider.setBaseUrl('/data');
+    RestAngularProvider.setBaseUrl('data');
     //RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
     RestAngularProvider.setRequestSuffix('.json');
   }]).run(['$rootScope', function($rootScope){

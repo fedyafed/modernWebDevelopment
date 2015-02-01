@@ -45,22 +45,24 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'karma']
       },
       styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css',
-          '<%= yeoman.app %>/styles/*.css'],
+        files: ['<%= yeoman.app %>/styles/*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
+      },
+      html2js: {
+        files: ['<%= yeoman.app %>/views/{,*/}*.html'],
+        tasks: ['html2js:server']
       },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '<%= yeoman.app %>/views/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.app %>/*.html',
           '.tmp/styles/*.css',
+          '.tmp/scripts/html_template.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -178,7 +180,7 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
           // '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
+          '<%= yeoman.dist %>/fonts/*'
         ]
       }
     },
@@ -271,8 +273,22 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html'],
           dest: '<%= yeoman.dist %>'
+        }]},
+      html2js: {
+        options: {
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: ['{,*/}*.html'],
+          dest: '.tmp/views'
         }]
       }
     },
@@ -297,6 +313,29 @@ module.exports = function (grunt) {
       }
     },
 
+    html2js: {
+      options: {
+        module: 'auction.templates',
+        singleModule: true,
+        useStrict: true,
+        quoteChar: '\''
+      },
+      server: {
+        options: {
+          base: '<%= yeoman.app %>'
+        },
+        src: ['<%= yeoman.app %>/views/{,*/}*.html'],
+        dest: '.tmp/scripts/html_template.js'
+      },
+      dist: {
+        options: {
+          base: '.tmp'
+        },
+        src: ['.tmp/views/{,*/}*.html'],
+        dest: '<%= yeoman.dist %>/scripts/html_template.js'
+      }
+    },
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -309,16 +348,20 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'fonts/*',
-            'data/*'
+            'data/**'
           ]
         }, {
           expand: true,
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          cwd: 'bower_components/bootstrap/dist/fonts',
+          dest: '<%= yeoman.dist %>/fonts',
+          src: '*.*'
         }]
       },
       styles: {
@@ -363,6 +406,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'html2js:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -377,6 +421,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
+    'html2js:server',
     'autoprefixer',
     'connect:test',
     'karma'
@@ -391,12 +436,14 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
+    'htmlmin:html2js',
+    'html2js:dist',
     'cdnify',
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin:dist'
   ]);
 
   grunt.registerTask('default', [
