@@ -1,48 +1,55 @@
-(function () {
-  'use strict';
+'use strict';
+(function(){
+angular
+  .module('auction', [
+    'ngRoute',
+    'restangular',
+    'auction.templates'
+  ]).config(['$routeProvider', function($routeProvider){
+    var getTitle = function(page){
+      return page + ' | Auction';
+    };
 
-  angular.module('auction', ['ngRoute', 'restangular'])
-    .config(['$routeProvider', function ($routeProvider) {
-      var title = function (page) {
-        return page + ' | Auction';
-      };
-
-      $routeProvider
-        .when('/', {
-          templateUrl: 'views/home.html',
-          controller: 'HomeController',
-          controllerAs: 'ctrl',
-          title: title('Home')
-        })
-        .when('/search', {
-          templateUrl: 'views/search.html',
-          controller: 'SearchController',
-          controllerAs: 'ctrl',
-          title: title('Search')
-        })
-        .when('/product/:productId', {
-          templateUrl: 'views/product.html',
-          controller: 'ProductController',
-          controllerAs: 'ctrl',
-          title: title('Product Details'),
-          resolve: {
-            product: ['$route', 'ProductService', function ($route, productService) {
-              var productId = parseInt($route.current.params.productId);
-              return productService.getProductById(productId);
-            }]
-          }
-        })
-        .otherwise({
-           redirectTo: '/'
-         });
-    }])
-    .config(['RestangularProvider', function (RestangularProvider) {
-      RestangularProvider.setBaseUrl('/data');
-      RestangularProvider.setRequestSuffix('.json');
-    }])
-    .run(['$rootScope', function ($rootScope) {
-      $rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
-        $rootScope.pageTitle = currentRoute.title;
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/home.html',
+        title: getTitle('Home'),
+        controller: 'HomeController',
+        controllerAs: 'ctrl'
+      })
+      .when('/search', {
+        templateUrl: 'views/search.html',
+        title: getTitle('Search'),
+        reloadOnSearch: false,
+        controller: 'SearchController',
+        controllerAs: 'ctrl'
+      })
+      .when('/product/:productId', {
+        templateUrl: 'views/product.html',
+        title: getTitle('Product'),
+        controller: 'ProductDetailsController',
+        controllerAs: 'ctrl',
+        resolve: {
+          product: ['ProductService', '$route', function(ProductService, $route){
+            return ProductService.getProductById(parseInt($route.current.params.productId))
+              .then(function (product) {
+                return product;
+              }, function () {
+                return null;
+              });
+        }]}
+      })
+      .otherwise({
+        redirectTo: '/'
       });
-    }]);
+  }]).config(['RestangularProvider', function(RestAngularProvider){
+    RestAngularProvider.setBaseUrl('data');
+    //RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
+    RestAngularProvider.setRequestSuffix('.json');
+  }]).run(['$rootScope', function($rootScope){
+    $rootScope.$on('$routeChangeSuccess', function(event, newRoute){
+      $rootScope.title = newRoute.$$route.title;
+      $rootScope.$emit('cleanErrors');
+    });
+  }]);
 }());

@@ -1,51 +1,70 @@
+'use strict';
 (function () {
-  'use strict';
-
-  var priceRangeDirectiveFactory = function () {
+  angular.module('auction').directive('priceRange', function(){
     return {
-      scope: {
-        minPrice : '@',
-        maxPrice : '@',
-        lowPrice : '=',
-        highPrice: '='
-      },
       restrict: 'E',
-      templateUrl: 'views/partial/PriceRangeDirective.html',
-      link: function (scope, element) {
-        var slider = angular.element(element).find('input[type=text]'),
-            min = scope.minPrice || 0,
-            max = scope.maxPrice || 500;
+      scope: {
+        min: '@',
+        max: '@',
+        step: '@',
+        low: '=',
+        high: '='
+      },
+      templateUrl: 'views/directive/PriceRangeDirective.html',
+      link: function(scope, element){
+        var sliderElement = angular.element(element).find('input[type="text"]');
+        var min = parseInt(scope.min) || 0;
+        var max = parseInt(scope.max) || 100;
+        var step = parseInt(scope.step) || (max - min) / 100;
+        scope.Min = min;
+        scope.Max = max;
+        scope.Step = step;
 
-        scope.lowPrice  = scope.lowPrice  || min;
-        scope.highPrice = scope.highPrice || max;
+        scope.low = parseInt(scope.low) || min;
+        scope.high = parseInt(scope.high) || max;
 
-        // Initialize slider
-        slider.slider({
+        var slider = sliderElement.slider({
           min: min,
           max: max,
-          value: [
-            scope.lowPrice,
-            scope.highPrice
-          ]
+          step: step,
+          value: [scope.low, scope.high],
+          tooltip: 'hide',
+          handle: 'triangle'
         });
 
-        // Slider -> numeric fields
-        slider.on('slideStop', function (event) {
-          scope.$apply(function () {
-            if (scope.lowPrice  !== event.value[0]) { scope.lowPrice  = event.value[0]; }
-            if (scope.highPrice !== event.value[1]) { scope.highPrice = event.value[1]; }
-          });
+        slider.on('slideStop', function(event){
+          if (event.value[0] !== scope.low){
+            scope.$apply(scope.low = event.value[0]);
+          }
+          if (event.value[1] !== scope.high){
+            scope.$apply(scope.high = event.value[1]);
+          }
         });
 
-        // Numeric fields -> slider
-        var currentVal = function () { return slider.slider('getValue'); };
-        var setSlider = function (low, high) { slider.slider('setValue', [low, high]); };
+        scope.$watch('low', function(val){
+          var value = parseInt(val);
+          if (isNaN(value) || value < scope.Min) {
+            value = scope.Min;
+          }
+          if (value > scope.high) {
+            value = scope.high;
+          }
+          scope.low = value;
+          slider.slider('setValue', [scope.low, scope.high]);
+        });
 
-        scope.$watch('lowPrice',  function (newVal) { setSlider(newVal || min, currentVal()[1]); });
-        scope.$watch('highPrice', function (newVal) { setSlider(currentVal()[0], newVal || max); });
+        scope.$watch('high', function(val){
+          var value = parseInt(val);
+          if (value < scope.low) {
+            value = scope.low;
+          }
+          if (isNaN(value) || value > scope.Max) {
+            value = scope.Max;
+          }
+          scope.high = value;
+          slider.slider('setValue', [scope.low, scope.high]);
+        });
       }
     };
-  };
-
-  angular.module('auction').directive('auctionPriceRange', priceRangeDirectiveFactory);
+  });
 }());

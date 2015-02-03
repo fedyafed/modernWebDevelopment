@@ -1,69 +1,82 @@
-<div class="row well">
-
-  <div class="col-xs-12 col-sm-10">
-    <ol class="breadcrumb">
-      <li><a href="javascript:void(0);">Home</a></li>
-      <li>Category title</li>
-      <li class="active">Item</li>
-    </ol>
+<div class="well row">
+  <div class="col-sm-6 col-md-8 form-group">
+    <a href="#/">Home</a>
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <a href="#/category">Category Title</a>
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span ng-bind="ctrl.product.title">Item</span>
   </div>
-
-  <div class="col-xs-12 col-sm-2">
-    <button ng-hide="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = true"  class="btn btn-default btn-block">Find more</button>
-    <button ng-show="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = false" class="close" aria-hidden="true">&times;</button>
+  <div class="col-sm-6 col-md-4">
+    <button class="btn btn-default form-control" ng-hide="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = true">Find More</button>
+    <div class="text-right">
+      <button class="close" ng-show="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = false">&times;</button>
+    </div>
   </div>
-
-  <auction-search-form ng-show="ctrl.isSearchFormVisible"></auction-search-form>
-
+  <div class="col-xs-12" ng-show="ctrl.isSearchFormVisible">
+    <search-form></search-form>
+  </div>
 </div>
-
-<br/>
-
-<div class="row">
-  <div class="col-sm-6 col-lg-5 text-center">
-    <img ng-src="images/{{ ctrl.product.thumb }}" alt="" class="img-responsive center-block">
-    <hr>
+<div class="row" ng-show="ctrl.product">
+  <div class="col-sm-6">
+    <div >
+      <img class="img-responsive center-block" ng-src="images/{{ctrl.product.thumb}}">
+    </div>
     <div class="row">
       <div class="col-xs-4">
-        <a href="javascript:void(0);"><img ng-src="images/{{ ctrl.product.thumb }}" alt="" class="img-responsive center-block"></a>
+        <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
       </div>
       <div class="col-xs-4">
-        <a href="javascript:void(0);"><img ng-src="images/{{ ctrl.product.thumb }}" alt="" class="img-responsive center-block"></a>
+        <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
       </div>
       <div class="col-xs-4">
-        <a href="javascript:void(0);"><img ng-src="images/{{ ctrl.product.thumb }}" alt="" class="img-responsive center-block"></a>
+        <img class="img-responsive" ng-src="images/{{ctrl.product.thumb}}">
       </div>
     </div>
-    <hr>
-    <h5>
-      <span class="badge"><span class="glyphicon glyphicon-eye-open"></span></span> {{ ctrl.product.watchers }} Watchers <a
-      href="javascript:void(0);" class="btn">Watch</a>
-    </h5>
+
+    <br/>
+    <div class="row text-center">
+      <span class="badge"><span class="glyphicon glyphicon-eye-open"></span></span>
+      <span ng-bind="ctrl.product.watchers"></span>
+      Watchers
+      <a class="btn">Watch</a>
+    </div>
   </div>
-
-  <div class="col-sm-6 col-lg-7">
-    <div>
-      <h1>{{ ctrl.product.title }}</h1>
-      <p>Seller: <b>starmotors</b> (135) 100% Positive feedback</p>
-    </div>
-    <div class="col-sm-12 col-md-9">
-      <h4><b>Current Price</b>: {{ ctrl.product.price | currency }} [5&nbsp;bids]</h4>
-      <p>
-        <b>Time left</b>: {{ ctrl.product.timeleft }}h
-      </p>
-    </div>
-    <div class="col-sm-12 col-md-3">
-      <form class="form-horizontal" role="form">
+  <div class="col-sm-6">
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <h1 ng-bind="ctrl.product.title"></h1>
+        <div>
+          Seller: <b>starmotors</b> (135) 100% Positive feedback
+        </div>
+      </div>
+      <div class="col-md-8">
         <div class="form-group">
-          <input type="text" class="form-control" value="">
+          <div>
+            <h4> <b>Current price:</b> <span ng-bind="ctrl.product.price | currency"></span>
+              [5 bids]
+            </h4>
+          </div>
+          <div>
+            <b>Time Left:</b> <span ng-bind="ctrl.product.timeleft"1></span> h
+          </div>
+          <div>
+            Today 15.00
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <input class="form-control">
         </div>
         <div class="form-group">
-          <button class="btn btn-default btn-block btn-primary">Place bid</button>
+          <button class="form-control btn btn-default btn-primary">Place Bid</button>
         </div>
-      </form>
+      </div>
     </div>
 
-    <div class="col-xs-12"><b>Item's description</b>:  {{ ctrl.product.description }}
+    <div class="form-group">
+      <h4>Item's description:</h4>
+      <p ng-bind="ctrl.product.description"></p>
     </div>
   </div>
 </div>

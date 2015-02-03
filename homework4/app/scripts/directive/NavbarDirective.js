@@ -1,13 +1,19 @@
+'use strict';
 (function () {
-  'use strict';
-
-  var navbarDirectiveFactory = function () {
+  angular.module('auction').directive('auctionNavbar', function(){
     return {
-      scope: false,
+      scope: {},
       restrict: 'E',
-      templateUrl: 'views/partial/NavbarDirective.html'
+      templateUrl: 'views/directive/Navbar.html',
+      controller: ['SearchService', function(SearchService) {
+        this.find = function() {
+          var search = SearchService.getSearch();
+          search.name = this.searchName;
+          SearchService.showSearch(search);
+          this.searchName = '';
+        };
+      }],
+      controllerAs: 'ctrl'
     };
-  };
-
-  angular.module('auction').directive('auctionNavbar', navbarDirectiveFactory);
+  });
 }());

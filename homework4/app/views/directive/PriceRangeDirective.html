@@ -1,0 +1,19 @@
+<div class="form-group">
+  <div class="col-xs-6">
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <input class="form-control" type="number" ng-model="low" ng-model-options="{ updateOn: 'blur' }" min="{{Min}}" max="{{high}}" step="{{Step}}">
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <input class="form-control" type="number" ng-model="high" ng-model-options="{ updateOn: 'blur' }" min="{{low}}" max="{{Max}}" step="{{Step}}">
+    </div>
+  </div>
+  </div>
+<div class="form-group">
+  <div class="col-xs-12">
+    <input type="text">
+  </div>
+</div>

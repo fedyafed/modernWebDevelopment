@@ -1,13 +1,19 @@
-(function () {
-  'use strict';
-
-  var searchFormDirectiveFactory = function () {
+'use strict';
+(function(){
+  angular.module('auction').directive('searchForm', function(){
     return {
-      scope: false,
       restrict: 'E',
-      templateUrl: 'views/partial/SearchFormDirective.html'
-    };
-  };
+      scope: true,
+      templateUrl: 'views/directive/SearchFormDirective.html',
+      controller: ['SearchService', '$scope', function(SearchService){
+        this.search = SearchService.getSearch();
+        this.priceRange = SearchService.getPriceRange();
 
-  angular.module('auction').directive('auctionSearchForm', searchFormDirectiveFactory);
+        this.find = function() {
+          SearchService.showSearch(this.search);
+        };
+      }],
+      controllerAs: 'ctrl'
+    };
+  });
 }());

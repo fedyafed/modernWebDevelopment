@@ -1,14 +1,17 @@
+'use strict';
 (function () {
-  'use strict';
+  var HomeController = function(ProductService, $rootScope){
+    this.ProductService = ProductService;
+    this.$rootScope = $rootScope;
+    this.products = [];
 
-  var HomeController = function (productService) {
-    var _this = this;
-    _this.products = [];
-
-    productService.getProducts()
-        .then(function (data) { _this.products = data; });
+    ProductService.listProducts().then(function(data){
+      this.products = data;
+    }.bind(this), function() {
+      this.$rootScope.$emit('error', ['Can not load products']);
+    }.bind(this));
   };
 
-  HomeController.$inject = ['ProductService'];
+  HomeController.$inject = ['ProductService', '$rootScope'];
   angular.module('auction').controller('HomeController', HomeController);
 }());
