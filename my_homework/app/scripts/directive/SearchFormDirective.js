@@ -5,12 +5,12 @@
       restrict: 'E',
       scope: true,
       templateUrl: 'views/directive/SearchFormDirective.html',
-      controller: ['SearchService', '$scope', function(SearchService, $scope){
+      controller: ['SearchService', function(SearchService){
         this.search = SearchService.getSearch();
         this.priceRange = SearchService.getPriceRange();
 
         this.find = function() {
-          SearchService.updateSearch(this.search);
+          SearchService.showSearch(this.search);
         };
       }],
       controllerAs: 'ctrl'

@@ -7,7 +7,7 @@
 
     this.searchProducts = function () {
       return Restangular.all('products').getList(
-        SearchService.getSearch()
+        SearchService.getCleanSearch()
       );
     };
 

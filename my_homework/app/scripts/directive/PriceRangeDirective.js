@@ -49,8 +49,8 @@
           if (value > scope.high) {
             value = scope.high;
           }
-            scope.low = value;
-            slider.slider('setValue', [scope.low, scope.high]);
+          scope.low = value;
+          slider.slider('setValue', [scope.low, scope.high]);
         });
 
         scope.$watch('high', function(val){
@@ -61,10 +61,8 @@
           if (isNaN(value) || value > scope.Max) {
             value = scope.Max;
           }
-          if (scope.high !== value) {
-            scope.high = value;
-          }
-            slider.slider('setValue', [scope.low, scope.high]);
+          scope.high = value;
+          slider.slider('setValue', [scope.low, scope.high]);
         });
       }
     };

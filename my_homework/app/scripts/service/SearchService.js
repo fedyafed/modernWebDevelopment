@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var SearchService = function($location) {
+  var SearchService = function($location, $rootScope) {
     this.SEARCH_DEFAULTS = {
       lowPrice: 0,
       highPrice: 500,
@@ -12,43 +12,60 @@
     this.search = {};
 
     this.urlToSearch = function() {
-      console.log('search update');
-      this.search = $location.search();
+      if ($location.path() !== '/search') {
+        return;
+      }
+      var newSearch = $location.search();
+      for (var i in this.SEARCH_DEFAULTS) {
+        if (this.SEARCH_DEFAULTS.hasOwnProperty(i)) {
+          if (typeof (newSearch[i]) === 'undefined') {
+            this.search[i] = this.SEARCH_DEFAULTS[i];
+          } else {
+            this.search[i] = newSearch[i];
+          }
+        }
+      }
       if (this.search.closeDate) {
         this.search.closeDate = this.search.closeDate.replace(new RegExp('-', 'g'), '/');
       }
       if (this.search.bidNum) {
         this.search.bidNum = parseInt(this.search.bidNum);
       }
+      if (this.search.lowPrice) {
+        this.search.lowPrice = parseInt(this.search.lowPrice);
+      }
+      if (this.search.highPrice) {
+        this.search.highPrice = parseInt(this.search.highPrice);
+      }
     }.bind(this);
 
-    //$rootScope.$on('$routeUpdate', this.urlToSearch);
+    this.urlToSearch();
+    $rootScope.$on('$routeUpdate', this.urlToSearch);
+    $rootScope.$on('$routeChangeStart', this.urlToSearch);
 
-    this.updateSearch = function (searchParams) {
-      var newSearch = {};
-      for (var i in searchParams) {
-        if (searchParams.hasOwnProperty(i) && searchParams[i] !== this.SEARCH_DEFAULTS[i] && typeof searchParams[i] !== 'undefined') {
-          newSearch[i] = searchParams[i];
+    this.getCleanSearch = function() {
+      var cleanSearch = {};
+      for (var i in this.search) {
+        if (this.search.hasOwnProperty(i) && this.search[i] !== this.SEARCH_DEFAULTS[i] && typeof this.search[i] !== 'undefined') {
+          cleanSearch[i] = this.search[i];
         }
       }
-      //this.search = JSON.parse(JSON.stringify(newSearch));
-      if (newSearch.closeDate) {
-        newSearch.closeDate = newSearch.closeDate.replace(new RegExp('/', 'g'), '-');
+      if (cleanSearch.closeDate) {
+        cleanSearch.closeDate = cleanSearch.closeDate.replace(new RegExp('/', 'g'), '-');
       }
+      return cleanSearch;
+    };
 
+    this.showSearch = function (search) {
+      this.search = search;
       if ($location.path() !== '/search') {
         $location.path('search');
       }
-      $location.search(newSearch);
+      $location.search(this.getCleanSearch());
     };
 
     this.getSearch = function () {
-      console.log('get search');
-      if ($location.path() === '/search') {
-
-        this.urlToSearch();
-      }
-      return JSON.parse(JSON.stringify(this.search));
+      return this.search;
     };
 
     this.getPriceRange = function () {
@@ -56,7 +73,7 @@
     };
   };
 
-  SearchService.$inject = ['$location'];
+  SearchService.$inject = ['$location', '$rootScope'];
   angular.module('auction').service('SearchService', SearchService);
 }());
 

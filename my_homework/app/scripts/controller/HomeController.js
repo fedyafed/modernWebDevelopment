@@ -5,12 +5,11 @@
     this.$rootScope = $rootScope;
     this.products = [];
 
-    var _this = this;
     ProductService.listProducts().then(function(data){
-      _this.products = data;
-    }, function() {
-      _this.$rootScope.$emit('error', ['Can not load products']);
-    });
+      this.products = data;
+    }.bind(this), function() {
+      this.$rootScope.$emit('error', ['Can not load products']);
+    }.bind(this));
   };
 
   HomeController.$inject = ['ProductService', '$rootScope'];

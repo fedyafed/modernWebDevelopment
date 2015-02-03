@@ -51,6 +51,5 @@ angular
       $rootScope.title = newRoute.$$route.title;
       $rootScope.$emit('cleanErrors');
     });
-
   }]);
 }());
