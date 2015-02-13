@@ -12,6 +12,5 @@
     }.bind(this));
   };
 
-  HomeController.$inject = ['ProductService', '$rootScope'];
   angular.module('auction').controller('HomeController', HomeController);
 }());

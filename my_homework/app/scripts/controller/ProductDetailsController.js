@@ -9,6 +9,5 @@
     }
   };
 
-  ProductDetailsController.$inject = ['product', '$rootScope'];
   angular.module('auction').controller('ProductDetailsController', ProductDetailsController);
 }());

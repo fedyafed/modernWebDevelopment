@@ -12,10 +12,10 @@
       link: function(scope, element){
         var fromDate = scope.fromDate || '';
         var toDate = scope.toDate || '';
-        scope.datePicker = angular.element(element).find('input');
+        scope.datePicker = angular.element(element).find('.date');
 
         scope.datePicker.datepicker({
-          format: 'mm/dd/yyyy',
+          format: 'yyyy-mm-dd',
           startDate: fromDate,
           endDate: toDate
         });
