@@ -21,5 +21,7 @@
     }
   };
 
+  ProductService.$inject = ['Restangular', 'SearchService'];
+
   angular.module('auction').service('ProductService', ProductService);
 }());

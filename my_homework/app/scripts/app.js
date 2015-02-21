@@ -3,8 +3,8 @@
 angular
   .module('auction', [
     'ngRoute',
-    'restangular',
-    'auction.templates'
+//---dist---    'auction.templates',
+    'restangular'
   ]).config(['$routeProvider', function($routeProvider){
     var getTitle = function(page){
       return page + ' | Auction';

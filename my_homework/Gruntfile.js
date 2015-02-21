@@ -51,18 +51,13 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      html2js: {
-        files: ['<%= yeoman.app %>/views/{,*/}*.html'],
-        tasks: ['html2js:server']
-      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/*.html',
+          '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/*.css',
-          '.tmp/scripts/html_template.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -169,7 +164,7 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       }
     },
 
@@ -189,7 +184,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.dist %>/index.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -275,22 +270,7 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.dist %>',
           src: ['*.html'],
           dest: '<%= yeoman.dist %>'
-        }]},
-      html2js: {
-        options: {
-          collapseWhitespace: true,
-          conservativeCollapse: true,
-          collapseBooleanAttributes: true,
-          removeCommentsFromCDATA: true,
-          removeOptionalTags: true
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/views',
-          src: ['{,*/}*.html'],
-          dest: '.tmp/views'
-        }]
-      }
+        }]}
     },
 
     // ng-annotate tries to make the code safe for minification automatically
@@ -315,24 +295,50 @@ module.exports = function (grunt) {
 
     html2js: {
       options: {
+        base: '<%= yeoman.app %>',
         module: 'auction.templates',
         singleModule: true,
         useStrict: true,
-        quoteChar: '\''
-      },
-      server: {
-        options: {
-          base: '<%= yeoman.app %>'
-        },
-        src: ['<%= yeoman.app %>/views/{,*/}*.html'],
-        dest: '.tmp/scripts/html_template.js'
+        quoteChar: '\'',
+        htmlmin: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          removeAttributeQuotes: true,
+          removeComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: false,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true
+        }
       },
       dist: {
-        options: {
-          base: '.tmp'
-        },
-        src: ['.tmp/views/{,*/}*.html'],
-        dest: '<%= yeoman.dist %>/scripts/html_template.js'
+        src: ['<%= yeoman.app %>/views/{,*/}*.html'],
+        dest: '.tmp/scripts/html_template.js'
+      }
+    },
+
+    //for html2js
+    replace: {
+      dist_js: {
+        src: [
+          '.tmp/concat/scripts/*.js'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: /\/\/---dist---\s*(\S+)\s*/g,
+          to: '$1'
+        }]
+      },
+      dist_html: {
+        src: [
+          '<%= yeoman.app %>/*.html'
+        ],
+        dest: '<%= yeoman.dist %>/',
+        replacements: [{
+          from: /<!---dist---\s*(<[^>]+>\s*<\/[^>]+>)\s*---dist--->/g,
+          to: '$1'
+        }]
       }
     },
 
@@ -347,7 +353,6 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            '*.html',
             'images/{,*/}*.{webp}',
             'fonts/*',
             'data/**'
@@ -406,7 +411,6 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
-      'html2js:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -421,7 +425,6 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
-    'html2js:server',
     'autoprefixer',
     'connect:test',
     'karma'
@@ -430,20 +433,21 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'replace:dist_html',
+    'html2js',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'ngAnnotate',
+    'replace:dist_js',
     'copy:dist',
-    'htmlmin:html2js',
-    'html2js:dist',
     'cdnify',
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin:dist'
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [

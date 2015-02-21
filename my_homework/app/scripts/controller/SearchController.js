@@ -29,5 +29,7 @@
     }
   };
 
+  SearchController.$inject = ['ProductService', '$rootScope', '$scope'];
+
   angular.module('auction').controller('SearchController', SearchController);
 }());

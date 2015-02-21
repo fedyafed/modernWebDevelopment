@@ -61,6 +61,8 @@
     };
   };
 
+  SearchService.$inject = ['$location', '$rootScope'];
+
   angular.module('auction').service('SearchService', SearchService);
 }());
 
