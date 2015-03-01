@@ -1,16 +1,20 @@
 'use strict';
-(function(){
-  angular.module('auction').directive('searchForm', function(){
+(function () {
+  angular.module('auction').directive('searchForm', function () {
     return {
       restrict: 'E',
       scope: true,
       templateUrl: 'views/directive/SearchFormDirective.html',
-      controller: ['SearchService', function(SearchService){
+      controller: ['SearchService', '$scope', function (SearchService, $scope) {
         this.search = SearchService.getSearch();
         this.priceRange = SearchService.getPriceRange();
 
-        this.find = function() {
-          SearchService.showSearch(this.search);
+        $scope.$on('ProductSearchUpdate', function () {
+          this.search = SearchService.getSearch();
+        }.bind(this));
+
+        this.find = function () {
+          SearchService.setSearch(this.search);
         };
       }],
       controllerAs: 'ctrl'

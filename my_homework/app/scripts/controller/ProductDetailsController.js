@@ -1,15 +1,15 @@
 'use strict';
 (function () {
-  var ProductDetailsController = function(product, $rootScope) {
+  var ProductDetailsController = function (product, $scope) {
     this.product = product;
     this.isSearchFormVisible = false;
     if (!product) {
-      $rootScope.$emit('error', ['Product not found']);
+      $scope.$emit('error', ['Product not found']);
       this.isSearchFormVisible = true;
     }
   };
 
-  ProductDetailsController.$inject = ['product', '$rootScope'];
+  ProductDetailsController.$inject = ['product', '$scope'];
 
   angular.module('auction').controller('ProductDetailsController', ProductDetailsController);
 }());

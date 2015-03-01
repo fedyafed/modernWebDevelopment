@@ -46,10 +46,31 @@ angular
     RestAngularProvider.setBaseUrl('data');
     //RestAngularProvider.setBaseUrl('//private-d315d-webauction.apiary-mock.com');
     RestAngularProvider.setRequestSuffix('.json');
-  }]).run(['$rootScope', function($rootScope){
+  }]).run(['$rootScope', '$location', 'SearchService', function($rootScope, $location, SearchService){
     $rootScope.$on('$routeChangeSuccess', function(event, newRoute){
       $rootScope.title = newRoute.$$route.title;
       $rootScope.$emit('cleanErrors');
+    });
+
+    var setSearchFromUrl = function() {
+      if ($location.path() === '/search') {
+        var newSearch = $location.search();
+        if (!_.isEqual(newSearch, SearchService.getUrlSearch())) {
+          SearchService.setSearch(newSearch);
+        }
+      }
+    };
+
+    $rootScope.$on('$routeUpdate', setSearchFromUrl);
+    $rootScope.$on('$routeChangeStart', setSearchFromUrl);
+    $rootScope.$on('ProductSearchUpdate', function() {
+      if ($location.path() !== '/search') {
+        $location.path('search');
+      }
+      var newSearch = SearchService.getUrlSearch();
+      if (!_.isEqual(newSearch, $location.search())) {
+        $location.search(newSearch);
+      }
     });
   }]);
 }());

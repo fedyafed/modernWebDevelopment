@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var ProductService = function(Restangular, SearchService) {
+  var ProductService = function (Restangular, SearchService) {
     this.Restangular = Restangular;
     this.SearchService = SearchService;
   };
@@ -12,7 +12,7 @@
 
     searchProducts: function () {
       return this.Restangular.all('products').getList(
-        this.SearchService.getCleanSearch()
+        this.SearchService.getUrlSearch()
       );
     },
 

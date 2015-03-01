@@ -1,35 +1,31 @@
 'use strict';
 (function () {
-  var SearchController = function(ProductService, $rootScope, $scope){
+  var SearchController = function (ProductService, $scope) {
     this.ProductService = ProductService;
-    this.$rootScope = $rootScope;
+    this.$scope = $scope;
     this.products = [];
 
-    var routeUpdateUnsubscribe = $rootScope.$on('$routeUpdate', function(){
+    $scope.$on('ProductSearchUpdate', function () {
       this.refreshPage();
     }.bind(this));
-
-    $scope.$on('$destroy', function(){
-      routeUpdateUnsubscribe();
-    });
 
     this.refreshPage();
   };
 
   SearchController.prototype = {
-    refreshPage: function() {
+    refreshPage: function () {
       this.ProductService.searchProducts().then(function (data) {
         this.products = data;
         if (!data || data.length === 0) {
-          this.$rootScope.$emit('error', ['Products not found']);
+          this.$scope.$emit('error', ['Products not found']);
         }
       }.bind(this), function () {
-        this.$rootScope.$emit('error', ['Can not load products']);
+        this.$scope.$emit('error', ['Can not load products']);
       }.bind(this));
     }
   };
 
-  SearchController.$inject = ['ProductService', '$rootScope', '$scope'];
+  SearchController.$inject = ['ProductService', '$scope'];
 
   angular.module('auction').controller('SearchController', SearchController);
 }());

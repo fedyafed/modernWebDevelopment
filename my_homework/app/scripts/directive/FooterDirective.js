@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  angular.module('auction').directive('auctionFooter', function(){
+  angular.module('auction').directive('auctionFooter', function () {
     return {
       scope: false,
       restrict: 'E',

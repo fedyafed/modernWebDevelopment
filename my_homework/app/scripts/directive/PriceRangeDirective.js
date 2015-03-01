@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  angular.module('auction').directive('priceRange', function(){
+  angular.module('auction').directive('priceRange', function () {
     return {
       restrict: 'E',
       scope: {
@@ -11,7 +11,7 @@
         high: '='
       },
       templateUrl: 'views/directive/PriceRangeDirective.html',
-      link: function(scope, element){
+      link: function (scope, element) {
         var sliderElement = angular.element(element).find('input[type="text"]');
         var min = parseInt(scope.min) || 0;
         var max = parseInt(scope.max) || 100;
@@ -32,16 +32,16 @@
           handle: 'triangle'
         });
 
-        slider.on('slideStop', function(event){
-          if (event.value[0] !== scope.low){
+        slider.on('slideStop', function (event) {
+          if (event.value[0] !== scope.low) {
             scope.$apply(scope.low = event.value[0]);
           }
-          if (event.value[1] !== scope.high){
+          if (event.value[1] !== scope.high) {
             scope.$apply(scope.high = event.value[1]);
           }
         });
 
-        scope.$watch('low', function(val){
+        scope.$watch('low', function (val) {
           var value = parseInt(val);
           if (isNaN(value) || value < scope.Min) {
             value = scope.Min;
@@ -53,7 +53,7 @@
           slider.slider('setValue', [scope.low, scope.high]);
         });
 
-        scope.$watch('high', function(val){
+        scope.$watch('high', function (val) {
           var value = parseInt(val);
           if (value < scope.low) {
             value = scope.low;

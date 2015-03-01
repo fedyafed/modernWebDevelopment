@@ -56,7 +56,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/{,views/,views/directive/}*.html',
           '.tmp/styles/*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -320,7 +320,7 @@ module.exports = function (grunt) {
 
     //for html2js
     replace: {
-      dist_js: {
+      distJS: {
         src: [
           '.tmp/concat/scripts/*.js'
         ],
@@ -330,7 +330,7 @@ module.exports = function (grunt) {
           to: '$1'
         }]
       },
-      dist_html: {
+      distHTML: {
         src: [
           '<%= yeoman.app %>/*.html'
         ],
@@ -433,14 +433,14 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'replace:dist_html',
+    'replace:distHTML',
     'html2js',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'ngAnnotate',
-    'replace:dist_js',
+    'replace:distJS',
     'copy:dist',
     'cdnify',
     'cssmin',

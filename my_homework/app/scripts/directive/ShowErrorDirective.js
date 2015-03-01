@@ -1,26 +1,28 @@
 'use strict';
 (function () {
-  angular.module('auction').directive('showError', function(){
+  angular.module('auction').directive('showError', function () {
     return {
       scope: true,
       restrict: 'E',
       templateUrl: 'views/directive/ShowError.html',
-      controller: ['$rootScope', '$scope', function($rootScope, $scope){
-        $scope.errors = [];
-        $scope.closeError = function(index){
-          $scope.errors.splice(index, 1);
+      controller: ['$rootScope', function ($rootScope) {
+        this.errors = [];
+        this.closeError = function (index) {
+          this.errors.splice(index, 1);
         };
-        $rootScope.$on('error', function(event, errors){
-          errors.forEach(function(error){
-            if ($scope.errors.indexOf(error) < 0) {
-              $scope.errors.push(error);
+        $rootScope.$on('error', function (event, errors) {
+          var that = this;
+          errors.forEach(function (error) {
+            if (that.errors.indexOf(error) < 0) {
+              that.errors.push(error);
             }
           });
-        });
-        $rootScope.$on('cleanErrors', function(){
-          $scope.errors = [];
-        });
-      }]
+        }.bind(this));
+        $rootScope.$on('cleanErrors', function () {
+          this.errors = [];
+        }.bind(this));
+      }],
+      controllerAs: 'ctrl'
     };
   });
 
