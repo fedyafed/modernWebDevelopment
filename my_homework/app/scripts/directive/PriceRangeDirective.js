@@ -43,26 +43,22 @@
 
         scope.$watch('low', function (val) {
           var value = parseInt(val);
-          if (isNaN(value) || value < scope.Min) {
-            value = scope.Min;
+          if (isNaN(value) || value < scope.Min ||value > scope.high) {
+            slider.slider('setValue', [scope.Min, scope.high]);
+          } else {
+            scope.low = value;
+            slider.slider('setValue', [scope.low, scope.high]);
           }
-          if (value > scope.high) {
-            value = scope.high;
-          }
-          scope.low = value;
-          slider.slider('setValue', [scope.low, scope.high]);
         });
 
         scope.$watch('high', function (val) {
           var value = parseInt(val);
-          if (value < scope.low) {
-            value = scope.low;
+          if (value < scope.low || isNaN(value) || value > scope.Max) {
+            slider.slider('setValue', [scope.low, scope.Max]);
+          } else {
+            scope.high = value;
+            slider.slider('setValue', [scope.low, scope.high]);
           }
-          if (isNaN(value) || value > scope.Max) {
-            value = scope.Max;
-          }
-          scope.high = value;
-          slider.slider('setValue', [scope.low, scope.high]);
         });
       }
     };
